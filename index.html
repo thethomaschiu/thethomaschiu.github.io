@@ -1,13 +1,33 @@
 <head>
     <title>Thomas Chiu</title>
     <script type="text/javascript">
-
+        function moveIt(){
+            this.style.margin = "0px auto";
+        }
+        const bigboss = document.getElementById("themainevent");
+        bigboss.addEventListener("click", moveIt());
     </script>
+    <style>
+        body{
+            background-color: #444;
+            color: #ccc;
+            font-size: 14px;
+        }
+        #themainevent{
+            display: inline-block;
+            background-color: #34ebeb;
+            color: #111;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Test Title</h1>
-    <p>Hello World!</p>
-    <button>Test Button</button>
-    <p>carter is dumb hehe</p>
-    <img src="http://assets.labroots.com/_public/_files/system/content-articles/images/body/7186cb9ce1b0d21eb8ae41b296b8b395299fe7ab_650x353.jpg" alt="sea bunny"/>
+    <h1>Welcome To My Website!</h1>
+    <p>Look it's me!</p>
+    <img src="./mehackerman.jpg" alt="itsa me hackerman!"/>
+    <p>Please click on the div below to see some magic.</p>
+    <br>
+    <div id="themainevent">This is a div</div>
 </body>
