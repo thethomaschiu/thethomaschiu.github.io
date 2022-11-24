@@ -2,4 +2,4 @@
 
 Just a [silly personal website] :)
 
-[silly personal website]: thethomaschiu.github.io
+[silly personal website]: https://thethomaschiu.github.io
