@@ -1,36 +1,20 @@
 <head>
-    <title>Thomas Chiu</title>
+    <title>This is where the fun begins</title>
+    <meta name="description" content="I can center a div">
+    <meta name="author" content="Thomas Chiu">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.slim.min.js"
+      integrity="sha256-w8CvhFs7iHNVUtnSP0YKEg00p9Ih13rlL9zGqvLdePA="
+      crossorigin="anonymous"></script>
     <script type="text/javascript">
-        function moveIt(){
-            alert("here");
-            this.style.margin = "0px auto";
-        }
-        document.getElementById("themainevent").addEventListener("click", moveIt);
+        $(document).ready(function(){
+            $("#themainevent").on("click", function(){
+                $(this).css("margin","0px auto");
+            });
+        });
     </script>
-    <style>
-        body{
-            background-color: #444;
-            color: #ccc;
-            font-size: 14px;
-        }
-        #meimg{
-            width: 200px;
-        }
-        #themainevent{
-            display: inline-block;
-            background-color: #34ebeb;
-            color: #111;
-            font-weight: bold;
-            padding: 10px 20px;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-        #themainevent:hover{
-            background-image: url('./media/rainbow.gif');
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-        }
-    </style>
 </head>
 <body>
     <h1>Welcome To My Website!</h1>
