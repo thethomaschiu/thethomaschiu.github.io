@@ -19,4 +19,6 @@ body{
     background-image: url('./media/rainbow.gif');
     background-repeat: no-repeat;
     background-width: 100%;
+    color: #fff;
+    box-shadow: 2px 2px 5px #000;
 }
