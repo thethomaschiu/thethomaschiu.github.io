@@ -3,6 +3,7 @@
     <meta name="description" content="I can center a div">
     <meta name="author" content="Thomas Chiu">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./normalize.css">
     <link rel="stylesheet" href="./index.css">
     <script
       src="https://code.jquery.com/jquery-3.6.1.slim.min.js"
@@ -10,20 +11,31 @@
       crossorigin="anonymous"></script>
     <script type="text/javascript">
         $(document).ready(function(){
+            var viewWidth = 0;
+
             $("#themainevent").on("click", function(){
-                //$("#mrmanager").css("text-align","center");
-                $("#themainevent").css("animation", "slideOnOver");
+                var newVW = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+                
+                //only change if viewport width has changed
+                if(newVW != viewWidth){
+                    $(this).text("This is a div").removeClass("centered");
+                    viewWidth = newVW;
+                    var newXPos = (viewWidth/2) - ($(this).outerWidth()/2);
+                    $(this).css("transform", "translate("+newXPos+"px,0)").delay(2000).queue(function(next){
+                        $(this).html("This is a <i>CENTERED</i> div!").addClass("centered");
+                        next();
+                    });
+                }
             });
         });
     </script>
 </head>
 <body>
-    <h1>Welcome To My Website!</h1>
-    <p>Look it's me!</p>
-    <img id="meimg" src="./media/mehackerman.jpg" alt="itsa me, hackerman!"/>
-    <p>Please click on the div below to see some magic.</p>
-    <br>
-    <div id="mrmanager">
-        <div id="themainevent">This is a div</div>
-    </div>
+    <a href="" class="sitetitle">Welcome To My Website!</a>
+    <p>
+        Look it's me!<br>
+        <img id="meimg" src="./media/mehackerman.jpg" alt="itsa me, hackerman!" title="im hackerman!"/><br>
+        Please click on the div below to see some magic.
+    </p>
+    <div id="themainevent">This is a div</div>
 </body>
