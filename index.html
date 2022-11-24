@@ -5,8 +5,7 @@
             alert("here");
             this.style.margin = "0px auto";
         }
-        const bigboss = document.getElementById("themainevent");
-        bigboss.addEventListener("click", moveIt());
+        document.getElementById("themainevent").addEventListener("click", moveIt);
     </script>
     <style>
         body{
@@ -26,12 +25,17 @@
             border-radius: 10px;
             cursor: pointer;
         }
+        #themainevent:hover{
+            background-image: url('./media/rainbow.gif');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
     </style>
 </head>
 <body>
     <h1>Welcome To My Website!</h1>
     <p>Look it's me!</p>
-    <img id="meimg" src="./mehackerman.jpg" alt="itsa me, hackerman!"/>
+    <img id="meimg" src="./media/mehackerman.jpg" alt="itsa me, hackerman!"/>
     <p>Please click on the div below to see some magic.</p>
     <br>
     <div id="themainevent">This is a div</div>
