@@ -1,5 +1,4 @@
 # thethomaschiu.github.io
 
-Just a [silly personal website] :)
+Just a <a href="[http://example.com/](https://thethomaschiu.github.io)" target="_blank">silly personal website</a> :)
 
-[silly personal website]: https://thethomaschiu.github.io
