@@ -1,0 +1,96 @@
+<head>
+    <title>This is where the fun begins</title>
+    <meta name="description" content="I can center a div">
+    <meta name="author" content="Thomas Chiu">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/normalize.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.slim.min.js"
+      integrity="sha256-w8CvhFs7iHNVUtnSP0YKEg00p9Ih13rlL9zGqvLdePA="
+      crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        // Some colors
+        const colors = ["#3772FF", "#F038FF", "#EF709D", "#E2EF70", "#519E8A"];
+
+        const numParticles = 80;
+        const radius = 15;
+        const particles = [];
+
+        $(document).ready(function(){
+            var viewWidth = 0;
+
+            $("#themainevent").on("click", function(){
+                var newVW = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+                
+                //only change if viewport width has changed
+                if(newVW != viewWidth){
+                    //reset text and removecentered class
+                    $(this).text("This is a div").removeClass("centered");
+
+                    //calculate new position based on new viewport size
+                    viewWidth = newVW;
+                    var newXPos = (viewWidth/2) - ($(this).outerWidth()/2);
+
+                    //animate div to new position
+                    $(this).css("transform", "translate("+newXPos+"px,0)").delay(2000).queue(function(next){
+                        //change text and add centered class
+                        $(this).html("This is a <i>CENTERED</i> div!").addClass("centered");
+                        $(this).css("z-index","5");
+                        next();
+                    }).queue(function(next){
+                        //create particle divs
+                        for (let i = 0; i < numParticles; i++) {
+                            let particle = document.createElement("div");
+                            particle.classList.add("particle");
+                            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                            particle.style.transform = `scale(${Math.random()})`;
+                            particle.style.width = `${Math.random()}em`;
+                            particle.style.height = particle.style.width;
+
+                            particles.push(particle);
+                            //document.body.appendChild(particle);
+                            $("#themainevent").append(particle);
+                        }
+
+                        var spawnPoint = {x:$(this).width()/2, y:-$(this).height()/2};
+                        
+                        particles.forEach((el, i, ra) => {
+                            //logic for particle translate location
+                            var angle = Math.random()*Math.PI*2;
+                            let to = {
+                                x:Math.cos(angle)*radius, 
+                                y:Math.sin(angle)*radius
+                            };
+
+                            //particle animations
+                            let anim = el.animate(
+                                [{ transform: `translate(${spawnPoint.x}px, ${spawnPoint.y}px)` },
+                                { transform: `translate(${to.x}rem, ${to.y}rem)` }],
+                                {
+                                duration: (Math.random() + 1) * 1000, // random duration
+                                direction: "alternate",
+                                fill: "both",
+                                iterations: Infinity,
+                                easing: "ease-out"
+                                }
+                            );
+                        });
+                        next();
+                    });
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="page">
+        <a href="" class="sitetitle">Welcome To My Website!</a>
+        <div class="section">
+            <div class="element">Look it's me!</div>
+            <div class="element"><img id="meimg" src="./media/mehackerman.jpg" alt="itsa me, hackerman!" title="im hackerman!"/></div>
+            <div class="element">Please click on the div below to see some magic.</div>
+        </div>
+        <div id="themainevent">This is a div</div>
+    </div>
+</body>
