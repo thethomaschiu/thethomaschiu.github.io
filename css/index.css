@@ -1,0 +1,67 @@
+body{
+    background-color: #444;
+    color: #ccc;
+    font-size: 14px;
+}
+.page{
+    padding: 5px 10px;
+}
+.section{
+    margin: 10px auto;
+}
+.element{
+    margin: 5px auto;
+}
+.sitetitle{
+    font-size: 30px;
+    font-weight: bold;
+    margin: 10px auto;
+    color: inherit;
+    text-decoration: inherit;
+}
+#meimg{
+    width: 200px;
+}
+#themainevent{
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    width: 100px;
+    background-color: #34ebeb;
+    color: #111;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 10px;
+    text-align:center;
+    cursor: pointer;
+    transition: transform 2s;
+}
+.centered{
+    background-image: url('./../media/rainbowspiral.gif');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: #fff!important;
+    box-shadow: 2px 2px 5px #000;
+}
+
+/* Animation */
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+
+/* particles */
+.particle{
+    position: absolute;
+    border-radius: 100%;
+    opacity: 1;
+}
