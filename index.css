@@ -28,7 +28,7 @@ body{
     transition: transform 2s;
 }
 .centered{
-    background-image: url('./media/rainbow.gif');
+    background-image: url('./media/rainbowspiral.gif');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
