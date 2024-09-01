@@ -14,70 +14,102 @@
         const colors = ["#3772FF", "#F038FF", "#EF709D", "#E2EF70", "#519E8A"];
 
         const numParticles = 80;
-        const radius = 15;
+        const maxParticleRadius = 15;
+        const maxRadius = 200;
         const particles = [];
 
+        //function returns width of user viewport
+        function getCurrentViewportWidth() {
+            return Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+        }
+
+        //function to reset div text and remove centered class
+        function resetDiv(element) {
+            element.text("This is a div");
+            element.removeClass("centered");
+        }
+
+        //function returns x position of element
+        function getXPos(element) {
+            return element.offset().left;
+        }
+        
+        //function to center the div and start a party
+        function centerDiv(element, newViewWidth) {
+            //calculate new x position
+            var newXPos = (newViewWidth/2) - (element.outerWidth()/2);
+
+            //animate div to new position
+            element.css("transform", "translate("+newXPos+"px,0)").delay(1000).queue(function(next){
+                //change text and add centered class
+                element.html("This is a <i>CENTERED</i> div!");
+                element.addClass("centered");
+                next();
+            }).queue(function(next){
+                //calculate particle spawn point
+                var spawnPoint = {
+                    x: (element.outerWidth()/2)-(maxParticleRadius), 
+                    y:-(element.outerHeight()/2)
+                };
+
+                //create particle divs
+                for (let i = 0; i < numParticles; i++) {
+                    let particle = document.createElement("div");
+                    particle.classList.add("particle");
+                    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.transform = `scale(${Math.random()})`;
+                    particle.style.width = `${Math.random()*maxParticleRadius}px`;
+                    particle.style.height = particle.style.width;
+                    particle.style.zIndex = "-1";
+
+                    particles.push(particle);
+                    element.append(particle);
+                }
+
+                particles.forEach((el, i, ra) => {
+                    //math for particle translate location
+                    var angle = Math.random()*Math.PI*2;
+                    let to = {
+                        x:((Math.cos(angle))*maxRadius)+((element.outerWidth()/2)-maxParticleRadius),
+                        y:((Math.sin(angle))*maxRadius)-(element.outerHeight()/2)+(maxParticleRadius/2)
+                    };
+
+                    //particle animations
+                    let anim = el.animate(
+                        [{ transform: `translate(${spawnPoint.x}px, ${spawnPoint.y}px)` },
+                        { transform: `translate(${to.x}px, ${to.y}px)` }],
+                        {
+                        duration: (Math.random() + 1) * 1000, // random duration
+                        fill: "both",
+                        iterations: Infinity,
+                        easing: "ease-out"
+                        }
+                    );
+                });
+                next();
+            });
+        }
+
         $(document).ready(function(){
-            var viewWidth = 0;
+            var viewWidth = getCurrentViewportWidth();
+
+            //if user resizes window check for centered-ness
+            $(window).on('resize', function(){
+                var divXPos = getXPos($("#themainevent"));
+                var newVW = getCurrentViewportWidth();
+
+                //reset if div is not centered else start the party
+                if(divXPos != ((newVW/2) - ($("#themainevent").outerWidth()/2))){
+                    resetDiv($("#themainevent"));
+                } else {
+                    centerDiv($("#themainevent"), getCurrentViewportWidth());
+                }
+            });
 
             $("#themainevent").on("click", function(){
-                var newVW = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-                
-                //only change if viewport width has changed
-                if(newVW != viewWidth){
-                    //reset text and removecentered class
-                    $(this).text("This is a div").removeClass("centered");
-
-                    //calculate new position based on new viewport size
-                    viewWidth = newVW;
-                    var newXPos = (viewWidth/2) - ($(this).outerWidth()/2);
-
-                    //animate div to new position
-                    $(this).css("transform", "translate("+newXPos+"px,0)").delay(2000).queue(function(next){
-                        //change text and add centered class
-                        $(this).html("This is a <i>CENTERED</i> div!").addClass("centered");
-                        $(this).css("z-index","5");
-                        next();
-                    }).queue(function(next){
-                        //create particle divs
-                        for (let i = 0; i < numParticles; i++) {
-                            let particle = document.createElement("div");
-                            particle.classList.add("particle");
-                            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                            particle.style.transform = `scale(${Math.random()})`;
-                            particle.style.width = `${Math.random()}em`;
-                            particle.style.height = particle.style.width;
-
-                            particles.push(particle);
-                            //document.body.appendChild(particle);
-                            $("#themainevent").append(particle);
-                        }
-
-                        var spawnPoint = {x:$(this).width()/2, y:-$(this).height()/2};
-                        
-                        particles.forEach((el, i, ra) => {
-                            //logic for particle translate location
-                            var angle = Math.random()*Math.PI*2;
-                            let to = {
-                                x:Math.cos(angle)*radius, 
-                                y:Math.sin(angle)*radius
-                            };
-
-                            //particle animations
-                            let anim = el.animate(
-                                [{ transform: `translate(${spawnPoint.x}px, ${spawnPoint.y}px)` },
-                                { transform: `translate(${to.x}rem, ${to.y}rem)` }],
-                                {
-                                duration: (Math.random() + 1) * 1000, // random duration
-                                direction: "alternate",
-                                fill: "both",
-                                iterations: Infinity,
-                                easing: "ease-out"
-                                }
-                            );
-                        });
-                        next();
-                    });
+                //only trigger if div is no longer centered
+                if(!$(this).hasClass("centered")){
+                    centerDiv($(this), getCurrentViewportWidth());
                 }
             });
         });
@@ -87,8 +119,8 @@
     <div class="page">
         <a href="" class="sitetitle">Welcome To My Website!</a>
         <div class="section">
-            <div class="element">Look it's me!</div>
-            <div class="element"><img id="meimg" src="./media/mehackerman.jpg" alt="itsa me, hackerman!" title="im hackerman!"/></div>
+            <div class="element" style="height:300px;">Look it's me!</div>
+            <div class="element"><img id="meimg" src="./media/mehackerman.jpg" alt="itsa me, hackerman!" title="im hackerman!"/></div>-->
             <div class="element">Please click on the div below to see some magic.</div>
         </div>
         <div id="themainevent">This is a div</div>
