@@ -34,7 +34,7 @@ body{
     border-radius: 10px;
     text-align:center;
     cursor: pointer;
-    transition: transform 2s;
+    transition: transform 1s;
 }
 .centered{
     background-image: url('./../media/rainbowspiral.gif');
