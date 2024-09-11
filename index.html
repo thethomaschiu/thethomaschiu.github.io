@@ -102,7 +102,11 @@
                 if(divXPos != ((newVW/2) - ($("#themainevent").outerWidth()/2))){
                     resetDiv($("#themainevent"));
                 } else {
-                    centerDiv($("#themainevent"), getCurrentViewportWidth());
+                    //only adjust if body width is changed
+                    if(newVH != viewWidth){
+                        centerDiv($("#themainevent"), getCurrentViewportWidth());
+                        viewWidth = newVW;
+                    }
                 }
             });
 
