@@ -20,7 +20,7 @@
 
         //function returns width of user viewport
         function getCurrentViewportWidth() {
-            return Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+            return document.body.clientWidth;
         }
 
         //function to reset div text and remove centered class
